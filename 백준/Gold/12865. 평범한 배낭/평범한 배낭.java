@@ -1,28 +1,30 @@
-import java.util.*;
+import java.util.Arrays;
+import java.util.Scanner;
 
-public class Main{
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		int n = sc.nextInt();
-		int k = sc.nextInt();
-		int[] w = new int[n];
-		int[] v = new int[n];
-		int[][] dp = new int[n+1][k+1];
-		int max = 0;
-		for(int i = 0; i < n; i++) {
-			w[i] = sc.nextInt();
-			v[i] = sc.nextInt();
-		}
-		
-		for(int i = 1; i <= n; i++) {
-			for(int j = 1; j <= k; j++) {
-				if(w[i-1] <= j)
-					dp[i][j] = Math.max(v[i-1] + dp[i-1][j - w[i-1]], dp[i-1][j]);
-				else
-					dp[i][j] = dp[i-1][j];
-				max = Math.max(dp[i][j], max);
-			}
-		}
-		System.out.println(max);
-	}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int max_weight = sc.nextInt();
+        int[] value = new int[N+1];
+        value[0] = 0;
+        int[] weight = new int[N + 1];
+        weight[0] = 0;
+        for (int i = 0; i <N ; i++) {
+            weight[i+1] = sc.nextInt();
+            value[i+1] = sc.nextInt();
+        }
+        int[][] dp = new int[N + 1][max_weight + 1];
+        Arrays.fill(dp[0],0);
+        for (int i = 1; i <dp.length ; i++) {
+            for (int j = 0; j < dp[i].length; j++) {
+                if (weight[i] > j) {
+                    dp[i][j] = dp[i - 1][j];
+                } else {
+                    dp[i][j] = Math.max(dp[i - 1][j], dp[i-1][j - weight[i]] + value[i]);
+                }
+            }
+        }
+        System.out.println(dp[N][max_weight]);
+    }
 }
