@@ -1,0 +1,33 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);//스캐너 객체
+        int num = sc.nextInt();
+        int[][] meeting = new int[num][2];//회의 시간을 저장할 배열 생성
+        for (int i = 0; i < num; i++) {
+            meeting[i][0] = sc.nextInt();//시작 시간 입력
+            meeting[i][1] = sc.nextInt();//끝나는 시간 입력
+        }
+        Arrays.sort(meeting, new Comparator<int[]>() {//배열 정렬
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                if (o1[1] == o2[1]) {//끝나는 시간이 같을 경우 시작시간이 빠른 순으로 정렬
+                    return o1[0] - o2[0];
+                } else {
+                    return o1[1]-o2[1];//끝나는 시간 순으로 정렬
+                }
+            }
+        });
+
+        int avail = 0;//가능한 회의 수
+        int present = 0;//회의 끝나는 시간
+        for (int i = 0; i <meeting.length ; i++) {
+            if (meeting[i][0] >= present) {//회의 시간을 비교해 가면서 시작 시간이 회의 끝나는 시간보다 크거나 같으면
+                present = meeting[i][1];//끝나는 시간을 재정의
+                avail++;//회의 수 추가
+            }
+        }
+        System.out.println(avail);
+
+    }
+}
