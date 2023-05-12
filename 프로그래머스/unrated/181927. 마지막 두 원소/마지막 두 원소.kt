@@ -1,16 +1,9 @@
 class Solution {
-    fun solution(num_list: IntArray): IntArray {
-        var answer = num_list.copyOf()
-        val n = num_list.size
-        val last = num_list[n-1]
-        val secondLast = num_list[n-2]
+    fun solution(num_list: IntArray) = num_list.run {
+        val last = get(size - 1)
+        val secondLast = get(size - 2)
 
-        if (last > secondLast) {
-            answer += last - secondLast
-        } else {
-            answer += last *2
-        }
-
-        return answer
+        if (last > secondLast) copyOf() + (last - secondLast) 
+        else copyOf() + (last * 2)
     }
 }
